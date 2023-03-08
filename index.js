@@ -19,27 +19,51 @@ const idList = [];
 const teamMembers = [];
 
 const appMenu = () => {
+    const isValid = (answer) => {
+        if (answer.trim() !== "") {
+            return true;
+        }
+        return "Please enter at least one character, it cannot be empty.";
+    }
+    const isEmailValid = (answer) => {
+        // TODO: Using paid API here rather than regex. Why? Refer to RFC 5322! 
+        // Performance! And too long regex is unreadable and unmaintainable.
+        return isValid(answer);
+    }
+
     function addEngineer() {
         inquirer.prompt([
             {
                 type: "input",
                 name: "engineerName",
-                message: "What is the engineer's name?"
+                message: "What is the engineer's name?",
+                validate: answer => {
+                    return isValid(answer);
+                }
             },
             {
                 type: "input",
                 name: "engineerId",
-                message: "What is the engineer's ID?"
+                message: "What is the engineer's ID?",
+                validate: answer => {
+                    return isValid(answer);
+                }
             },
             {
                 type: "input",
                 name: "engineerEmail",
-                message: "What is the engineer's email?"
+                message: "What is the engineer's email?",
+                validate: answer => {
+                    return isEmailValid(answer);
+                }
             },
             {
                 type: "input",
                 name: "engineerGithub",
-                message: "What is the engineer's GitHub?"
+                message: "What is the engineer's GitHub?",
+                validate: answer => {
+                    return isValid(answer);
+                }
             },
         ]).then(answers => {
             const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
@@ -55,22 +79,34 @@ const appMenu = () => {
             {
                 type: "input",
                 name: "internName",
-                message: "What is the intern's name?"
+                message: "What is the intern's name?",
+                validate: answer => {
+                    return isValid(answer);
+                }
             },
             {
                 type: "input",
                 name: "internId",
-                message: "What is the intern's ID?"
+                message: "What is the intern's ID?",
+                validate: answer => {
+                    return isValid(answer);
+                }
             },
             {
                 type: "input",
                 name: "internEmail",
-                message: "What is the intern's email?"
+                message: "What is the intern's email?",
+                validate: answer => {
+                    return isEmailValid(answer);
+                }
             },
             {
                 type: "input",
                 name: "internSchool",
-                message: "What is the intern's School?"
+                message: "What is the intern's School?",
+                validate: answer => {
+                    return isValid(answer);
+                }
             },
         ]).then(answers => {
             const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
@@ -119,10 +155,7 @@ const appMenu = () => {
                 name: "managerName",
                 message: "What is the team manager's name?",
                 validate: answer => {
-                    if (answer !== "") {
-                        return true;
-                    }
-                    return "Please enter at least one character, name cannot be empty.";
+                    return isValid(answer);
                 }
             },
             {
@@ -130,10 +163,7 @@ const appMenu = () => {
                 name: "managerId",
                 message: "What is the team manager's ID?",
                 validate: answer => {
-                    if (answer !== "") {
-                        return true;
-                    }
-                    return "Please enter at least one character, ID cannot be empty.";
+                    return isValid(answer);
                 }
             },
             {
@@ -141,10 +171,7 @@ const appMenu = () => {
                 name: "managerEmail",
                 message: "What is the team manager's email?",
                 validate: answer => {
-                    if (answer !== "") {
-                        return true;
-                    }
-                    return "Please enter at least one character, email cannot be empty.";
+                    return isEmailValid(answer);
                 }
             },
             {
@@ -152,10 +179,7 @@ const appMenu = () => {
                 name: "managerOfficeNumber",
                 message: "What is the team manager's office number?",
                 validate: answer => {
-                    if (answer !== "") {
-                        return true;
-                    }
-                    return "Please enter at least one character, office number cannot be empty.";
+                    return isValid(answer);
                 }
             }
         ]).then(answers => {
